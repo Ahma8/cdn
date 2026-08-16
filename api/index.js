@@ -1,7 +1,7 @@
 const express = require('express');
+const serverless = require('serverless-http');
 const app = express();
 
-// 🔴 آدرس پنل اصلی شما
 const BASE_PANEL_URL = "https://cdn.mytechline.ir:2096";
 
 app.use(async (req, res) => {
@@ -40,11 +40,8 @@ app.use(async (req, res) => {
     return res.status(200).send(data);
 
   } catch (err) {
-    return res.status(500).send("خطا در پروکسی رندر: " + err.message);
+    return res.status(500).send("خطا در پروکسی: " + err.message);
   }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+module.exports.handler = serverless(app);
